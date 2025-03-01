@@ -193,5 +193,29 @@ def handle_form():
     return output
 
 
+@app.get("/choice/<planet_name>")
+def planet_choice(planet_name: str):
+    return f"""
+    <!doctype html>
+    <html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content=" width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <title>Варианты выбора</title>
+    </head>
+    <body>
+    <h1>Мое предложение: {planet_name}</h1>
+    <div class="alert">Эта планета близка к Земле;</div>
+    <div class="alert alert-success">На ней много необходимых ресурсов;</div>
+    <div class="alert alert-light">На ней есть вода и атмосфера;</div>
+    <div class="alert alert-warning">На ней есть небольшое магнитное поле;</div>
+    <div class="alert alert-danger">Наконец, она просто красива!</div>
+    </body>
+    </html>
+    """
+
+
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port=8080, debug=True)

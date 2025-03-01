@@ -240,5 +240,43 @@ def show_results(nickname: str, level: int, rating: float):
     """
 
 
+@app.route("/load_photo", methods=["POST", "GET"])
+def load_pic():
+    if request.method == "POST" and request.files["avatar"]:
+        pic = request.files["avatar"]
+        filename = f"avatar.{pic.filename.split(".")[-1]}"
+        where = url_for("static", filename=f"img/{filename}")
+        pic.save(f"static/img/{filename}")
+        img_str = f'<img src="{where}" alt="Не выбрана" class="avatar d-block m-3">'
+    else:
+        img_str = '<p class="m-3 text-danger">Не выбрана фотография</p>'
+
+    return f"""
+    <!doctype html>
+    <html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content=" width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="{url_for("static", filename="css/load_picture.css")}">
+        <title>Варианты выбора</title>
+    </head>
+    <body class="d-flex flex-column align-items-center">
+    <div class="d-flex flex-column align-items-center">
+        <h1>Загрузка фотографии</h1>
+        <h2>Для участия в миссии</h2>
+        <form method="post" class="m-2 p-3 bg-warning-subtle" enctype="multipart/form-data">
+            <p>Приложите фотографию</p>
+            <input class="form-control" type="file" name="avatar">
+            {img_str}
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+    </div>
+    </body>
+    </html>
+    """
+
+
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port=8080, debug=True)

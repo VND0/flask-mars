@@ -217,5 +217,28 @@ def planet_choice(planet_name: str):
     """
 
 
+@app.get("/results/<nickname>/<int:level>/<float:rating>")
+def show_results(nickname: str, level: int, rating: float):
+    return f"""
+    <!doctype html>
+    <html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content=" width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <title>Варианты выбора</title>
+    </head>
+    <body>
+    <h1>Результаты отбора</h1>
+    <h2>Претендента на участие в миссии {nickname}:</h2>
+    <h3 class="bg-success-subtle pt-3">Поздравляем! Ваш рейтинг после {level} этапа отбора</h3>
+    <h3 class="pt-3">составляет {rating}!</h3>
+    <h3 class="pt-3 bg-warning-subtle">Желаем удачи</h3>
+    </body>
+    </html>
+    """
+
+
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port=8080, debug=True)
